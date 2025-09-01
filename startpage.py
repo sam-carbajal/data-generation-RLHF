@@ -36,6 +36,7 @@ def GenerationButton(anfang_text, num_stories, client_key, model, prompt):
                 #})
             st.session_state["story_pool"].extend(new_items)
         st.success(f"{len(new_items)} Geschichten generiert.")
+        st.rerun()
 
 def InitializeSession(n):
     st.title("KI Generator + Annotationen")

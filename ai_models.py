@@ -21,7 +21,7 @@ def ClientKey(model):
         return genai.GenerativeModel(model)
     elif model == "gpt-4o-mini" or model == "gpt-4o":
         return OpenAI(
-                api_key=st.secrets['GEMINI_API_KEY']
+                api_key=st.secrets['OPENAI_API_KEY']
             )
     #elif model == "deepseek-chat":
     #    return api_key

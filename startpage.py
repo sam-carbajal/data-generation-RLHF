@@ -26,12 +26,16 @@ def DefaultSettings():
 def GenerationButton(anfang_text, num_stories, client_key, model, prompt):
     if st.button(f"{anfang_text}"):
         with st.spinner("Geschichten werden generiert..."):
+            new_items = []
             for i in range(num_stories):
                 response = GenerateResponse(client_key, model, prompt)
-                return st.session_state["story_pool"].append({
-                    "text": response,
-                    "model": model
-                })
+                new_items.append({"text": response, "model": model})
+                #return st.session_state["story_pool"].append({
+                #    "text": response,
+                #    "model": model
+                #})
+            st.session_state["story_pool"].extend(new_items)
+        st.success(f"{len(new_items)} Geschichten generiert.")
 
 def InitializeSession(n):
     st.title("KI Generator + Annotationen")

@@ -11,16 +11,9 @@ def AnnotationSection(prompt, criteria):
     tab_names = list(criteria.keys())
     tabs = st.tabs(tab_names)
 
-    # Fill both dicts in session state while rendering tabs
     rankings, justifs = Ranking(tabs, tab_names)
-
-    # Build final annotation JSON snapshot
     annotation = AnnotationFormat(rankings, prompt, justifs)
 
-    # (Optional) quick preview
-    # st.json(annotation)
-
-    # Download / copy
     DownloadJSON(annotation, tab_names)
 
     if st.button("Zurück", key="generator"):
@@ -28,14 +21,6 @@ def AnnotationSection(prompt, criteria):
 
 
 def Ranking(tabs, tab_names):
-    """
-    Renders each criterion tab:
-      - shows stories
-      - renders draggable list
-      - stores ranking in st.session_state["rankings"][name]
-      - stores justification in st.session_state["justifications"][name]
-    Returns (rankings, justifs) dicts from session_state for convenience.
-    """
     rankings = st.session_state.setdefault("rankings", {})
     justifs = st.session_state.setdefault("justifications", {})
 
@@ -63,7 +48,7 @@ def Ranking(tabs, tab_names):
 
             rankings[name] = [f"Story_{it['id']+1}" for it in ordered_items]
 
-            st.markdown("**Kurze Begründung** (1–2 Sätze): ")
+            st.markdown("**Kurze Begründung** (1–5 Sätze): ")
             justification = st.text_area("Erläutern Sie Ihre Reihenfolge der Geschichten. " \
                             "Bitte auf den Hauptgrund konzentrieren. **Zum Beispiel:** " \
                             "Story 3 stellt die Moral am deutlichsten heraus, " \
@@ -77,15 +62,11 @@ def Ranking(tabs, tab_names):
 
 
 def AnnotationFormat(rankings, prompt, just_annot):
-    """
-    rankings: dict like {crit: ["Story_2","Story_1",...]}
-    just_annot: dict like {crit: "text..."}
-    """
+    
     criteria_annot = {}
+
     for crit, rank_list in rankings.items():
-        # Ensure list shape
         if isinstance(rank_list, dict):
-            # If somehow a dict slipped in, order by numeric keys
             rank_list = [v for _, v in sorted(rank_list.items())]
         else:
             rank_list = list(rank_list)

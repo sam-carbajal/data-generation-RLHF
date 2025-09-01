@@ -5,14 +5,22 @@ from annotation_page import AnnotationSection
 from startpage import DefaultSettings, InitializeSession
 
 criteria = {
-    "Clarity_of_Moral": "How clearly does the story express its moral or lesson?",
-    "Age_Appropriateness": "Is the story suitable for the target age group?",
-    "Emotional_Resonance": "Does the story engage emotions in a positive, age-appropriate way?",
-    "Engagement_Creativity": "Is the story creative and fun for children?",
-    "Potential_for_Harm": "Does the story contain harmful or inappropriate elements?"
+    "Inhaltliche Passung": "Aus kindlicher Perspektive mutmaßlich erkennbarer inhaltlicher Bezug zwischen "
+                        "Prompt und Resultat",
+    "Schlüssige Handlung": "Aus kindlicher Perspektive mutmaßlich schlüssige Handlung",
+    "Stimulation & Immersion": "Aus kindlicher Perspektive mutmaßlich stimulierende Erzählung "
+                                "(z. B. lustig, spannend, immersiv)",
+    "Natürliche Sprache": "Aus pädagogischer Perspektive natürliche Gestalt der Sprache",
+    "Sprachliche Fokussierung": "Aus pädagogischer Perspektive sprachlich fokussiert "
+                                "(viele kurze, verständliche Sätze und viel einfaches Vokabular; "
+                                "gezielt einzelne „Stepping Stones“, also herausfordernde Sätze und Vokabeln; "
+                                "nur einfache Sprache oder zu schwere Sprache → niedriger Score, ausgewogene "
+                                "Mischung → hoher Score)",
+    "Pädagogisch schlüssige Handlung": "Aus pädagogischer Perspektive ansprechende Handlung mit schlüssiger "
+                                "Ereignisabfolge, angemessener Konfliktdarstellung, interessanten Wendungen"
 }
 
-n = 2 # Anzahl der Geschichten
+n = 5 # Anzahl der Geschichten
 
 DefaultSettings()
 

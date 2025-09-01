@@ -59,25 +59,16 @@ def InitializeSession(n):
 def AnnotationSelection(n):
     if st.session_state["story_pool"]:
             st.subheader("Erstellte Geschichten:")
-            
-            exp_state = st.session_state.setdefault("exp_state", {})
-
             for idx, s in enumerate(st.session_state["story_pool"]):
-                expanded = exp_state.get(idx, False)
                 with st.expander(f"Story {idx+1} - {s['model']}"):
                     st.write(s['text'])
-
-            def _on_select_change():
-                for i in range(len(st.session_state["story_pool"])):
-                    st.session_state["exp_state"][i] = False
 
             selected_indices = st.multiselect(
                 f"Wähle bis zu {n} Geschichten für Annotationen aus.", 
                 options=list(range(len(st.session_state["story_pool"]))),
                 format_func=lambda i: f"Story {i+1}",
                 default=st.session_state["selected_indices"],  # bisherige Auswahl beibehalten
-                key="story_selector",
-                on_change=_on_select_change,
+                key="story_selector"
             )
 
             st.session_state["selected_indices"] = selected_indices

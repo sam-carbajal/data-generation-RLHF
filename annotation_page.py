@@ -9,7 +9,7 @@ def AnnotationSection(prompt, criteria):
     st.markdown("Bitte bewerte die Geschichten anhand der Kriterien.")
 
     tab_names = list(criteria.keys())
-    tabs = st.tabs(tab_names)
+    tabs = st.tabs(tab_names, width="stretch")
 
     rankings, justifs = Ranking(tabs, tab_names)
     annotation = AnnotationFormat(rankings, prompt, justifs)

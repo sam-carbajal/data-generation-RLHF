@@ -1,4 +1,4 @@
-from streamlit import st
+import streamlit as st
 from google import genai
 from openai import OpenAI
 

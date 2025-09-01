@@ -27,7 +27,7 @@ def Ranking(tabs, tab_names, tab_criteria):
 
     for t_idx, (tab, name) in enumerate(zip(tabs, tab_names)):
         with tab:
-            st.write(f"**{tab_criteria[t_idx]}**")
+            st.write(f"'Beschreibung: '**{tab_criteria[t_idx]}**")
             st.text("Zum Lesen der Geschichten:")
 
             stories = []

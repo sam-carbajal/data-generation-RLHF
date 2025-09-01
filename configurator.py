@@ -16,7 +16,7 @@ criteria = {
                                 "gezielt einzelne „Stepping Stones“, also herausfordernde Sätze und Vokabeln; "
                                 "nur einfache Sprache oder zu schwere Sprache → niedriger Score, ausgewogene "
                                 "Mischung → hoher Score)",
-    "Pädagogisch schlüssige Handlung": "Aus pädagogischer Perspektive ansprechende Handlung mit schlüssiger "
+    "Pädagogisch schlüssige \n \n Handlung": "Aus pädagogischer Perspektive ansprechende Handlung mit schlüssiger "
                                 "Ereignisabfolge, angemessener Konfliktdarstellung, interessanten Wendungen"
 }
 

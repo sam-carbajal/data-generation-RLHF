@@ -5,18 +5,18 @@ from annotation_page import AnnotationSection
 from startpage import DefaultSettings, InitializeSession
 
 criteria = {
-    "Inhaltliche \n \n Passung": "Aus kindlicher Perspektive mutmaßlich erkennbarer inhaltlicher Bezug zwischen "
+    "Inhaltliche_Passung": "Aus kindlicher Perspektive mutmaßlich erkennbarer inhaltlicher Bezug zwischen "
                         "Prompt und Resultat",
-    "Schlüssige \n \n Handlung": "Aus kindlicher Perspektive mutmaßlich schlüssige Handlung",
-    "Stimulation und \n \n Immersion": "Aus kindlicher Perspektive mutmaßlich stimulierende Erzählung "
+    "Schlüssige_Handlung": "Aus kindlicher Perspektive mutmaßlich schlüssige Handlung",
+    "Stimulation": "Aus kindlicher Perspektive mutmaßlich stimulierende Erzählung "
                                 "(z. B. lustig, spannend, immersiv)",
-    "Natürliche \n \n Sprache": "Aus pädagogischer Perspektive natürliche Gestalt der Sprache",
-    "Sprachliche \n \n Fokussierung": "Aus pädagogischer Perspektive sprachlich fokussiert "
+    "Natürliche_Sprache": "Aus pädagogischer Perspektive natürliche Gestalt der Sprache",
+    "Sprachliche_Fokussierung": "Aus pädagogischer Perspektive sprachlich fokussiert "
                                 "(viele kurze, verständliche Sätze und viel einfaches Vokabular; "
                                 "gezielt einzelne „Stepping Stones“, also herausfordernde Sätze und Vokabeln; "
                                 "nur einfache Sprache oder zu schwere Sprache → niedriger Score, ausgewogene "
                                 "Mischung → hoher Score)",
-    "Pädagogisch schlüssige \n \n Handlung": "Aus pädagogischer Perspektive ansprechende Handlung mit schlüssiger "
+    "Pädagogische_Handlung": "Aus pädagogischer Perspektive ansprechende Handlung mit schlüssiger "
                                 "Ereignisabfolge, angemessener Konfliktdarstellung, interessanten Wendungen"
 }
 

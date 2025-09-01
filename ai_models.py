@@ -19,7 +19,7 @@ def ClientKey(model):
         #return genai.Client(api_key=st.secrets['OPENAI_API_KEY'])
         genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
         return genai.GenerativeModel(model)
-    elif model == "gpt-4o-mini" or model == "gpt-4o":
+    elif model == "gpt-4o-mini" or model == "gpt-4o" or model == "gpt-5":
         return OpenAI(
                 api_key=st.secrets['OPENAI_API_KEY']
             )
@@ -37,7 +37,7 @@ def GenerateResponse(client_key, model, prompt):
         response = client_key.generate_content(prompt)
         #return response.text.strip()
         return (getattr(response, "text", None) or "")
-    elif model == "gpt-4o-mini" or model == "gpt-4o":
+    elif model == "gpt-4o-mini" or model == "gpt-4o" or model == "gpt-5":
         response = client_key.chat.completions.create(
             model=model,
             messages=[

@@ -76,10 +76,10 @@ def AnnotationSelection(n):
             if "show_annotation" not in st.session_state:
                 st.session_state["show_annotation"] = False
 
-            if len(selected_indices) == n:
-                l, m, m2, m3, m4, m5, r = st.columns(7)
-                if r.button("Weiter", key="go_annotation"):
-                    if len(selected_indices) != n:
-                        st.warning(f"Bitte wähle genau {n} Geschichten für die Annotation aus!")
-                    else:
-                        st.session_state["page"] = "annotation"
+            #if len(selected_indices) == n:
+            l, m, m2, m3, m4, m5, r = st.columns(7)
+            if r.button("Weiter", key="go_annotation"):
+                if len(selected_indices) != n:
+                    st.warning(f"Bitte wähle genau {n} Geschichten für die Annotation aus!")
+                else:
+                    st.session_state["page"] = "annotation"

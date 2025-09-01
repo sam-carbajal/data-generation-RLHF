@@ -51,7 +51,7 @@ def InitializeSession(n):
         num_stories = st.slider("Anzahl der zu generierenden Geschichten", 1, 10, 2)
         GenerationButton("Generiere Geschichten", num_stories, client_key, model, prompt)
     else:
-        num_new_stories = st.slider("Anzahl der zu generierenden neuen Stories", 1, 2, 1)
+        num_new_stories = st.slider("Anzahl der zu generierenden neuen Stories", 1, 5, 1)
         GenerationButton("Generiere eine neue Geschichte", num_new_stories, client_key, model, prompt)
         AnnotationSelection(n)
 

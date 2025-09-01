@@ -8,9 +8,9 @@ criteria = {
     "Inhaltliche \n \n Passung": "Aus kindlicher Perspektive mutmaßlich erkennbarer inhaltlicher Bezug zwischen "
                         "Prompt und Resultat",
     "Schlüssige \n \n Handlung": "Aus kindlicher Perspektive mutmaßlich schlüssige Handlung",
-    "Stimulation \n \n & Immersion": "Aus kindlicher Perspektive mutmaßlich stimulierende Erzählung "
+    "Stimulation & \n \n Immersion": "Aus kindlicher Perspektive mutmaßlich stimulierende Erzählung "
                                 "(z. B. lustig, spannend, immersiv)",
-    "Natürliche Sprache": "Aus pädagogischer Perspektive natürliche Gestalt der Sprache",
+    "Natürliche \n \n Sprache": "Aus pädagogischer Perspektive natürliche Gestalt der Sprache",
     "Sprachliche \n \n Fokussierung": "Aus pädagogischer Perspektive sprachlich fokussiert "
                                 "(viele kurze, verständliche Sätze und viel einfaches Vokabular; "
                                 "gezielt einzelne „Stepping Stones“, also herausfordernde Sätze und Vokabeln; "

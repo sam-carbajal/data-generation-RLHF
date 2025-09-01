@@ -1,4 +1,4 @@
-from turtle import st
+from streamlit import st
 from google import genai
 from openai import OpenAI
 

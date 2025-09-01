@@ -59,27 +59,36 @@ def InitializeSession(n):
 def AnnotationSelection(n):
     if st.session_state["story_pool"]:
             st.subheader("Erstellte Geschichten:")
+            
+            exp_state = st.session_state.setdefault("exp_state", {})
+
             for idx, s in enumerate(st.session_state["story_pool"]):
+                expanded = exp_state.get(idx, False)
                 with st.expander(f"Story {idx+1} - {s['model']}"):
                     st.write(s['text'])
+
+            def _on_select_change():
+                for i in range(len(st.session_state["story_pool"])):
+                    st.session_state["exp_state"][i] = False
 
             selected_indices = st.multiselect(
                 f"Wähle bis zu {n} Geschichten für Annotationen aus.", 
                 options=list(range(len(st.session_state["story_pool"]))),
                 format_func=lambda i: f"Story {i+1}",
                 default=st.session_state["selected_indices"],  # bisherige Auswahl beibehalten
-                key="story_selector"
+                key="story_selector",
+                on_change=_on_select_change,
             )
 
             st.session_state["selected_indices"] = selected_indices
 
             if "show_annotation" not in st.session_state:
                 st.session_state["show_annotation"] = False
-
-            #if len(selected_indices) == n:
-            l, m, m2, m3, m4, m5, r = st.columns(7)
-            if r.button("Weiter", key="go_annotation"):
-                if len(selected_indices) != n:
-                    st.warning(f"Bitte wähle genau {n} Geschichten für die Annotation aus!")
-                else:
-                    st.session_state["page"] = "annotation"
+    
+            if len(selected_indices) == n:
+                l, m, m2, m3, m4, m5, r = st.columns(7)
+                if r.button("Weiter", key="go_annotation"):
+                    if len(selected_indices) != n:
+                        st.warning(f"Bitte wähle genau {n} Geschichten für die Annotation aus!")
+                    else:
+                        st.session_state["page"] = "annotation"

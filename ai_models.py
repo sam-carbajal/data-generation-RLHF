@@ -16,7 +16,9 @@ class StoryGenerator:
 
 def ClientKey(model):
     if model == "gemini-2.5-flash" or model == "gemini-2.5-pro":
-        return genai.Client(api_key=st.secrets['OPENAI_API_KEY'])
+        #return genai.Client(api_key=st.secrets['OPENAI_API_KEY'])
+        genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+        return genai.GenerativeModel(model)
     elif model == "gpt-4o-mini" or model == "gpt-4o":
         return OpenAI(
                 api_key=st.secrets['GEMINI_API_KEY']
@@ -29,10 +31,12 @@ def ClientKey(model):
 
 def GenerateResponse(client_key, model, prompt):
     if model == "gemini-2.5-flash" or model == "gemini-2.5-pro":
-        response = client_key.models.generate_content(
-            model=model, contents=prompt
-        )
-        return response.text.strip()
+        #response = client_key.models.generate_content(
+        #    model=model, contents=prompt
+        #)
+        response = client_key.generate_content(prompt)
+        #return response.text.strip()
+        return (getattr(response, "text", None) or "")
     elif model == "gpt-4o-mini" or model == "gpt-4o":
         response = client_key.chat.completions.create(
             model=model,

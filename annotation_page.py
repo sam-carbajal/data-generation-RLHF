@@ -12,7 +12,10 @@ def AnnotationSection(prompt, criteria):
     tab_criteria = list(criteria.values())
     tabs = st.tabs(tab_names)
 
-    rankings, justifs = Ranking(tabs, tab_names, tab_criteria)
+    st.session_state["rankings"] = {}
+    st.session_state["justifications"] = {}
+
+    rankings, justifs = Ranking(tabs, tab_criteria)
     annotation = AnnotationFormat(rankings, prompt,justifs)
 
     DownloadJSON(annotation, tab_criteria)
@@ -21,7 +24,7 @@ def AnnotationSection(prompt, criteria):
         st.session_state["page"] = "generator"
 
 
-def Ranking(tabs, tab_names, tab_criteria):
+def Ranking(tabs, tab_criteria):
     rankings = st.session_state.setdefault("rankings", {})
     justifs = st.session_state.setdefault("justifications", {})
 

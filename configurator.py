@@ -24,7 +24,6 @@ n = 5 # Anzahl der Geschichten
 
 DefaultSettings()
 
-#prompt = ""
 
 if st.session_state["page"] == "generator":
     st.session_state["prompt"] = InitializeSession(n)

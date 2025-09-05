@@ -46,6 +46,7 @@ def InitializeSession(n):
         index=0  # Standard: Gemini
     )
     client_key = ClientKey(model)
+    prompt = ""
     prompt = st.text_input("Prompt eingeben")
 
     if len(st.session_state["story_pool"]) == 0:

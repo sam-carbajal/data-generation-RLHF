@@ -27,7 +27,8 @@ DefaultSettings()
 prompt = ""
 
 if st.session_state["page"] == "generator":
-    InitializeSession(n)
+    st.session_state["prompt"] = InitializeSession(n)
 
 elif st.session_state["page"] == "annotation":
+    prompt = st.session_state.get("prompt", "")
     AnnotationSection(prompt, criteria)

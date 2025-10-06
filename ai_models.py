@@ -23,8 +23,16 @@ def ClientKey(model):
         return OpenAI(
                 api_key=st.secrets['OPENAI_API_KEY']
             )
-    #elif model == "deepseek-chat":
-    #    return api_key
+    elif model == "deepseek":
+        return OpenAI(
+            api_key=st.secrets['DEEPSEEK_API_KEY'],
+            base_url="https://api.deepseek.com"
+        )
+    elif model == "grok":
+        return OpenAI(
+            api_key=st.secrets['GROK_API_KEY'],
+            base_url="https://api.x.ai/v1"
+        )
     else:
         raise ValueError(f"Unknown model: {model}")
     
@@ -34,12 +42,33 @@ def GenerateResponse(client_key, model, prompt):
         #response = client_key.models.generate_content(
         #    model=model, contents=prompt
         #)
-        response = client_key.generate_content(prompt)
+        response = client_key.generate_content(prompt, model=model, temperature=1.5)
         #return response.text.strip()
         return (getattr(response, "text", None) or "")
+    
     elif model == "gpt-4o-mini" or model == "gpt-4o" or model == "gpt-5":
         response = client_key.chat.completions.create(
             model=model,
+            temperature=1.5,
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return response.choices[0].message.content.strip()
+    
+    elif model == "deepseek":
+        response = client_key.chat.completions.create(
+            model="deepseek-3.5",
+            temperature=1.5,
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return response.choices[0].message.content.strip()
+    
+    elif model == "grok":    
+        response = client_key.chat.completions.create(
+            model="grok-3.5-turbo",
             messages=[
                 {"role": "user", "content": prompt}
             ]

@@ -42,7 +42,7 @@ def InitializeSession(n):
     st.title("KI Generator + Annotationen")
     model = st.selectbox(
         "Wähle ein Modell:",
-        ["gemini-2.5-pro", "gpt-4o-mini", "gpt-4o", "gpt-5"],
+        ["gemini-2.5-pro", "gpt-4o-mini", "gpt-4o", "gpt-5", "deepseek", "grok"],
         index=0  # Standard: Gemini
     )
     client_key = ClientKey(model)

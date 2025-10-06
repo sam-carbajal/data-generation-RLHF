@@ -66,7 +66,7 @@ def GenerateResponse(client_key, model, prompt):
             ],
             stream=False
         )
-        return response.choices[0].message.content
+        return response.choices[0].message.content.strip()
     
     
     elif model == "grok":    
@@ -76,5 +76,5 @@ def GenerateResponse(client_key, model, prompt):
                 {"role": "user", "content": prompt}
             ]
         )
-        return response.choices[0].message.content
+        return response.choices[0].message.content.strip()
 

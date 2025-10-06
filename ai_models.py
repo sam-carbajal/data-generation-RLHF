@@ -58,42 +58,23 @@ def GenerateResponse(client_key, model, prompt):
         return response.choices[0].message.content.strip()
     
     elif model == "deepseek":
-        st.write("Debug: Attempting DeepSeek API call...")
-        
-        # Check if client is properly set up
-        if client_key is None:
-            st.error("Client not initialized")
-            return None
-            
-        try:
-            # Test with a simple prompt first
-            test_response = client_key.chat.completions.create(
-                model="deepseek-chat",
-                messages=[{"role": "user", "content": "Say 'Hello'"}],
-                max_tokens=10
-            )
-            st.write("Debug: Basic API test passed")
-            
-            # Now make the actual call
-            response = client_key.chat.completions.create(
-                model="deepseek-chat",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.7,
-                max_tokens=2048,
-                stream=False
-            )
-            
-            return response.choices[0].message.content
-        except Exception as e:
-            st.error(f"DeepSeek API call failed: {e}")
-            return None
+        response = client_key.chat.completions.create(
+            model="deepseek-chat",
+            temperature=1.3,
+            messages=[
+                {"role": "user", "content": prompt},
+            ],
+            stream=False
+        )
+        return response.choices[0].message.content
+    
     
     elif model == "grok":    
         response = client_key.chat.completions.create(
-            model="grok-3.5-turbo",
+            model="grok-4-latest",
             messages=[
                 {"role": "user", "content": prompt}
             ]
         )
-        return response.choices[0].message.content.strip()
+        return response.choices[0].message.content
 

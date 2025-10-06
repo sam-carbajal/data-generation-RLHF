@@ -46,7 +46,13 @@ def InitializeSession(n):
         index=0  # Standard: Gemini
     )
     client_key = ClientKey(model)
-    temperature = st.slider("Kreativität der Antworten (Temperature)", 0.0, 0.5, 0.7, 1.0, 1.3, 1.5, 2.0)
+    temperature_options = [0.0, 0.3, 0.5, 0.7, 1.0, 1.3, 1.5, 2.0]
+    temperature = st.select_slider(
+        "Kreativität der Antworten (Temperature)",
+        options=temperature_options,
+        value=0.7,  # Default value
+        help="Wählen Sie einen vordefinierten Temperaturwert"
+    )
     prompt = ""
     prompt = st.text_input("Prompt eingeben")
     if len(st.session_state["story_pool"]) == 0:

@@ -57,9 +57,20 @@ def GenerateResponse(client_key, model, prompt):
         )
         return response.choices[0].message.content.strip()    
     
+    elif model == "deepseek":
+        response = client_key.chat.completions.create(
+            model="deepseek-chat",
+            temperature=1.3,
+            messages=[
+                {"role": "user", "content": prompt},
+            ]
+        )
+        return response.choices[0].message.content.strip()
+
     elif model == "grok":    
         response = client_key.chat.completions.create(
             model="grok-4-latest",
+            temperature=1.5,
             messages=[
                 {"role": "user", "content": prompt}
             ]

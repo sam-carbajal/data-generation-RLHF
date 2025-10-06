@@ -46,9 +46,9 @@ def InitializeSession(n):
         index=0  # Standard: Gemini
     )
     client_key = ClientKey(model)
+    temperature = st.slider("Kreativität der Antworten (Temperature)", 0.0, 0.5, 0.7, 1.0, 1.3, 1.5, 2.0)
     prompt = ""
     prompt = st.text_input("Prompt eingeben")
-    temperature = st.selectbox("Kreativität der Antworten (Temperature)", [0.0, 0.5, 1.0, 1.5, 2.0])
     if len(st.session_state["story_pool"]) == 0:
         num_stories = st.slider("Anzahl der zu generierenden Geschichten", 1, 10, 2)
         GenerationButton("Generiere Geschichten", num_stories, client_key, model, prompt, temperature)

@@ -40,16 +40,24 @@ def GenerationButton(anfang_text, num_stories, client_key, model, prompt, temper
 
 def InitializeSession(n):
     st.title("KI Generator + Annotationen")
-    model = st.selectbox(
-        "Wähle ein Modell:",
-        ["gemini-2.5-pro", "gpt-4o-mini", "gpt-4o", "gpt-5", "deepseek", "grok"],
-        index=0  # Standard: Gemini
-    )
-    client_key = ClientKey(model)
+
     col1, col2 = st.columns([1, 3])
     with col1:
-        st.write("**Kreativität:**")
+        st.write("Wähle ein Modell:")
     with col2:
+        model = st.selectbox(
+            "Wähle ein Modell:",
+            ["gemini-2.5-pro", "gpt-4o-mini", "gpt-4o", "gpt-5", "deepseek", "grok"],
+            index=0,  # Standard: Gemini
+            label_visibility="collapsed" 
+        )
+
+    client_key = ClientKey(model)
+
+    col3, col4 = st.columns([1, 3])
+    with col3:
+        st.write("Temperatur:")
+    with col4:
         temperature_options = [0.0, 0.3, 0.5, 0.7, 1.0, 1.3, 1.5, 2.0]
         temperature = st.select_slider(
             "(Temperature)",
@@ -60,7 +68,7 @@ def InitializeSession(n):
     prompt = ""
     prompt = st.text_input("Prompt eingeben")
     if len(st.session_state["story_pool"]) == 0:
-        num_stories = st.slider("Anzahl der zu generierenden Geschichten", 1, 10, 2)
+        num_stories = st.slider("**Anzahl der zu generierenden Geschichten**", 1, 10, 2)
         GenerationButton("Generiere Geschichten", num_stories, client_key, model, prompt, temperature)
     else:
         num_new_stories = st.slider("Anzahl der zu generierenden neuen Stories", 1, 5, 1)

@@ -40,7 +40,7 @@ def GenerationButton(anfang_text, num_stories, client_key, model, prompt, temper
 
 def InitializeSession(n):
     #st.title("KI Generator + Annotationen")
-    st.header("KI Generator + Annotationen")
+    st.header("**KI Generator + Annotationen**")
     col1, col2 = st.columns([1, 3])
     with col1:
         st.write("Wähle ein Modell:")

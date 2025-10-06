@@ -38,19 +38,19 @@ def ClientKey(model):
         raise ValueError(f"Unknown model: {model}")
     
 
-def GenerateResponse(client_key, model, prompt):
+def GenerateResponse(client_key, model, prompt, temperature):
     if model == "gemini-2.5-flash" or model == "gemini-2.5-pro":
         #response = client_key.models.generate_content(
         #    model=model, contents=prompt
         #)
-        response = client_key.generate_content(prompt, model=model, temperature=1.5)
+        response = client_key.generate_content(prompt, model=model, temperature=temperature)
         #return response.text.strip()
         return (getattr(response, "text", None) or "")
     
     elif model == "gpt-4o-mini" or model == "gpt-4o" or model == "gpt-5":
         response = client_key.chat.completions.create(
             model=model,
-            temperature=1.5,
+            temperature=temperature,
             messages=[
                 {"role": "user", "content": prompt}
             ]
@@ -60,7 +60,7 @@ def GenerateResponse(client_key, model, prompt):
     elif model == "deepseek":
         response = client_key.chat.completions.create(
             model="deepseek-chat",
-            temperature=1.3,
+            temperature=temperature,
             messages=[
                 {"role": "user", "content": prompt},
             ]
@@ -70,7 +70,7 @@ def GenerateResponse(client_key, model, prompt):
     elif model == "grok":    
         response = client_key.chat.completions.create(
             model="grok-4-latest",
-            temperature=1.5,
+            temperature=temperature,
             messages=[
                 {"role": "user", "content": prompt}
             ]

@@ -23,12 +23,12 @@ def DefaultSettings():
     if "rankings" not in st.session_state:
         st.session_state["rankings"] = {}
 
-def GenerationButton(anfang_text, num_stories, client_key, model, prompt):
+def GenerationButton(anfang_text, num_stories, client_key, model, prompt, temperature):
     if st.button(f"{anfang_text}"):
         with st.spinner("Geschichten werden generiert..."):
             new_items = []
             for i in range(num_stories):
-                response = GenerateResponse(client_key, model, prompt)
+                response = GenerateResponse(client_key, model, prompt, temperature)
                 new_items.append({"text": response, "model": model})
                 #return st.session_state["story_pool"].append({
                 #    "text": response,
@@ -48,13 +48,13 @@ def InitializeSession(n):
     client_key = ClientKey(model)
     prompt = ""
     prompt = st.text_input("Prompt eingeben")
-
+    temperature = st.selectbox("Kreativität der Antworten (Temperature)", [0.0, 0.5, 1.0, 1.5, 2.0])
     if len(st.session_state["story_pool"]) == 0:
         num_stories = st.slider("Anzahl der zu generierenden Geschichten", 1, 10, 2)
-        GenerationButton("Generiere Geschichten", num_stories, client_key, model, prompt)
+        GenerationButton("Generiere Geschichten", num_stories, client_key, model, prompt, temperature)
     else:
         num_new_stories = st.slider("Anzahl der zu generierenden neuen Stories", 1, 5, 1)
-        GenerationButton("Generiere eine neue Geschichte", num_new_stories, client_key, model, prompt)
+        GenerationButton("Generiere eine neue Geschichte", num_new_stories, client_key, model, prompt, temperature)
         AnnotationSelection(n)
     return prompt
 

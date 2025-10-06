@@ -1,3 +1,4 @@
+import requests
 import streamlit as st
 import google.generativeai as genai
 from openai import OpenAI
@@ -56,15 +57,30 @@ def GenerateResponse(client_key, model, prompt):
         )
         return response.choices[0].message.content.strip()
     
+    #elif model == "deepseek":
+    #    response = client_key.chat.completions.create(
+    #        model="deepseek-3.5",
+    #        #temperature=1.5,
+    #        messages=[
+    #            {"role": "user", "content": prompt}
+    #        ]
+    #    )
+    #    return response.choices[0].message.content.strip()
+    
     elif model == "deepseek":
-        response = client_key.chat.completions.create(
-            model="deepseek-3.5",
-            #temperature=1.5,
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
-        )
-        return response.choices[0].message.content.strip()
+        url = "https://api.deepseek.com/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {client_key}",  # client_key = API key string
+            "Content-Type": "application/json"
+        }
+        data = {
+            "model": "deepseek-chat",
+            "temperature": 1.5,
+            "messages": [{"role": "user", "content": prompt}]
+        }
+        r = requests.post(url, headers=headers, json=data)
+        r.raise_for_status()
+        return r.json()["choices"][0]["message"]["content"].strip()
     
     elif model == "grok":    
         response = client_key.chat.completions.create(

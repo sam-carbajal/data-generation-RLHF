@@ -59,7 +59,7 @@ def GenerateResponse(client_key, model, prompt):
     elif model == "deepseek":
         response = client_key.chat.completions.create(
             model="deepseek-3.5",
-            temperature=1.5,
+            #temperature=1.5,
             messages=[
                 {"role": "user", "content": prompt}
             ]

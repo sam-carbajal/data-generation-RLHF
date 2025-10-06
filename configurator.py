@@ -6,7 +6,7 @@ from startpage import DefaultSettings, InitializeSession
 
 criteria = {
     "Werte": "Entspricht den moralischen Anforderungen?",
-    "Spannung": "Werden sprachliche Bilder, Methafern, etc. verwendet; gibt es unerwartete" 
+    "Spannung": "Werden sprachliche Bilder, Methafern, etc. verwendet; gibt es unerwartete " 
                             "Wendungen; Einzigartigkeit, ungewöhnliche Settings, Geschehnisse?",
     "Struktur": "Hat die Geschichte eine veständliche und schlüssige Erzählform? Ist sie dem "
                             "Alter des Kindes angepasst (Themen, Wortschatz, Komplexität)? Ist sie "

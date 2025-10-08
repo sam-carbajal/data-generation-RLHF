@@ -1,4 +1,5 @@
 import requests
+import anthropic
 import streamlit as st
 import google.generativeai as genai
 from openai import OpenAI
@@ -34,6 +35,8 @@ def ClientKey(model):
             api_key=st.secrets['GROK_API_KEY'],
             base_url="https://api.x.ai/v1"
         )
+    elif model == "claude":
+        return anthropic.Anthropic(api_key= st.secrets['CLAUDE_API_KEY'])
     else:
         raise ValueError(f"Unknown model: {model}")
     
@@ -75,6 +78,18 @@ def GenerateResponse(client_key, model, prompt, temperature):
     elif model == "grok":    
         response = client_key.chat.completions.create(
             model="grok-4-latest",
+            temperature=temperature,
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return response.choices[0].message.content.strip()
+
+    elif model == "claude":
+        if temperature > 1.0:
+            temperature = 1.0
+        response = client_key.messages.create(
+            model="claude-sonnet-4-5",
             temperature=temperature,
             messages=[
                 {"role": "user", "content": prompt}

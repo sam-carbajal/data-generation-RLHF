@@ -91,6 +91,7 @@ def GenerateResponse(client_key, model, prompt, temperature):
         response = client_key.messages.create(
             model="claude-3.5-sonnet-20240620",
             temperature=temperature,
+            max_tokens=512,
             messages=[
                 {"role": "user", "content": [{"type": "text", "text": prompt}]}
             ]

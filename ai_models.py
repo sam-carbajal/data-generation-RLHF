@@ -89,7 +89,7 @@ def GenerateResponse(client_key, model, prompt, temperature):
         if temperature > 1.0:
             temperature = 1.0
         response = client_key.messages.create(
-            model="claude-sonnet-4-5",
+            model="claude-3.5-sonnet-20240620",
             temperature=temperature,
             messages=[
                 {"role": "user", "content": prompt}

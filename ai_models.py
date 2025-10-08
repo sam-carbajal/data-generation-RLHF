@@ -44,7 +44,7 @@ def GenerateResponse(client_key, model, prompt, temperature):
         #    model=model, contents=prompt
         #)
         if model == "gemini-2.5-pro":
-            response = client_key.generate_content(prompt, model=model)
+            response = client_key.generate_content(prompt)
         else:
             response = client_key.generate_content(prompt, model=model, temperature=temperature)
         #return response.text.strip()

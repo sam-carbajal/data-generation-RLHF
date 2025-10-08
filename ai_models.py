@@ -91,10 +91,10 @@ def GenerateResponse(client_key, model, prompt, temperature):
         response = client_key.messages.create(
             model="claude-sonnet-4-5-20250929",
             temperature=temperature,
-            max_tokens=512,
+            max_tokens=20000,
             messages=[
                 {"role": "user", "content": [{"type": "text", "text": prompt}]}
             ]
         )
-        return response.choices[0].message.content.strip()
+        return response.content[0].text.strip()
 

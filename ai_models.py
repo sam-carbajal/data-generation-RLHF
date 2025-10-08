@@ -43,11 +43,16 @@ def GenerateResponse(client_key, model, prompt, temperature):
         #response = client_key.models.generate_content(
         #    model=model, contents=prompt
         #)
-        response = client_key.generate_content(prompt, model=model, temperature=temperature)
+        if model == "gemini-2.5-pro":
+            response = client_key.generate_content(prompt, model=model)
+        else:
+            response = client_key.generate_content(prompt, model=model, temperature=temperature)
         #return response.text.strip()
         return (getattr(response, "text", None) or "")
     
     elif model == "gpt-4o-mini" or model == "gpt-4o" or model == "gpt-5":
+        if model == "gpt-5":
+            temperature = min(temperature, 1.0)  
         response = client_key.chat.completions.create(
             model=model,
             temperature=temperature,

@@ -3,3 +3,5 @@ streamlit-draggable-list==0.0.1
 openai
 google-generativeai
 tomlkit 
+anthropic
+

@@ -92,7 +92,7 @@ def GenerateResponse(client_key, model, prompt, temperature):
             model="claude-3.5-sonnet-20240620",
             temperature=temperature,
             messages=[
-                {"role": "user", "content": prompt}
+                {"role": "user", "content": [{"type": "text", "text": prompt}]}
             ]
         )
         return response.choices[0].message.content.strip()

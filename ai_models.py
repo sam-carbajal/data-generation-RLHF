@@ -54,7 +54,7 @@ def GenerateResponse(client_key, model, prompt, temperature):
         return (getattr(response, "text", None) or "")
     
     elif model == "gpt-4o-mini" or model == "gpt-4o" or model == "gpt-5":
-        if model == "gpt-5" and temperature > 1.0:
+        if model == "gpt-5":
             temperature = 1.0
         response = client_key.chat.completions.create(
             model=model,

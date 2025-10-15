@@ -37,6 +37,17 @@ def ClientKey(model):
         )
     elif model == "claude":
         return anthropic.Anthropic(api_key= st.secrets['CLAUDE_API_KEY'])
+    
+    elif model == "alle":
+        return {
+            "gemini-2.5-pro": ClientKey("gemini-2.5-pro"),
+            "gpt-4o-mini": ClientKey("gpt-4o-mini"),
+            "gpt-4o": ClientKey("gpt-4o"),
+            "gpt-5": ClientKey("gpt-5"),
+            "deepseek": ClientKey("deepseek"),
+            "grok": ClientKey("grok"),
+            "claude": ClientKey("claude")
+        }
     else:
         raise ValueError(f"Unknown model: {model}")
     
@@ -97,4 +108,13 @@ def GenerateResponse(client_key, model, prompt, temperature):
             ]
         )
         return response.content[0].text.strip()
+    
+    elif model == "alle":
+        responses = {}
+        for m, ck in client_key.items():
+            try:
+                responses[m] = GenerateResponse(ck, m, prompt, temperature)
+            except Exception as e:
+                responses[m] = f"Error: {str(e)}"
+        return responses
 

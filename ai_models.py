@@ -50,60 +50,75 @@ def ClientKey(model_option):
         return client_model(model_option)
     
 
-def GenerateResponse(client_key, model, prompt, temperature):
-    if model == "gemini-2.5-flash" or model == "gemini-2.5-pro":
-        #response = client_key.models.generate_content(
-        #    model=model, contents=prompt
-        #)
-        if model == "gemini-2.5-pro":
-            response = client_key.generate_content(prompt)
-        else:
-            response = client_key.generate_content(prompt, model=model, temperature=temperature)
-        #return response.text.strip()
-        return (getattr(response, "text", None) or "")
-    
-    elif model == "gpt-4o-mini" or model == "gpt-4o" or model == "gpt-5":
-        if model == "gpt-5":
-            temperature = 1.0
-        response = client_key.chat.completions.create(
-            model=model,
-            temperature=temperature,
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
-        )
-        return response.choices[0].message.content.strip()    
-    
-    elif model == "deepseek":
-        response = client_key.chat.completions.create(
-            model="deepseek-chat",
-            temperature=temperature,
-            messages=[
-                {"role": "user", "content": prompt},
-            ]
-        )
-        return response.choices[0].message.content.strip()
+def GenerateResponse(client_key, model_option, prompt, temperature):
 
-    elif model == "grok":    
-        response = client_key.chat.completions.create(
-            model="grok-4-latest",
-            temperature=temperature,
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
-        )
-        return response.choices[0].message.content.strip()
+    def ResponseForEachModel(model, client_key, prompt, temperature):
+        if model == "gemini-2.5-flash" or model == "gemini-2.5-pro":
+            #response = client_key.models.generate_content(
+            #    model=model, contents=prompt
+            #)
+            if model == "gemini-2.5-pro":
+                response = client_key.generate_content(prompt)
+            else:
+                response = client_key.generate_content(prompt, model=model, temperature=temperature)
+            #return response.text.strip()
+            return (getattr(response, "text", None) or "")
+        
+        elif model == "gpt-4o-mini" or model == "gpt-4o" or model == "gpt-5":
+            if model == "gpt-5":
+                temperature = 1.0
+            response = client_key.chat.completions.create(
+                model=model,
+                temperature=temperature,
+                messages=[
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            return response.choices[0].message.content.strip()    
+        
+        elif model == "deepseek":
+            response = client_key.chat.completions.create(
+                model="deepseek-chat",
+                temperature=temperature,
+                messages=[
+                    {"role": "user", "content": prompt},
+                ]
+            )
+            return response.choices[0].message.content.strip()
 
-    elif model == "claude":
-        if temperature > 1.0:
-            temperature = 1.0
-        response = client_key.messages.create(
-            model="claude-sonnet-4-5-20250929",
-            temperature=temperature,
-            max_tokens=20000,
-            messages=[
-                {"role": "user", "content": [{"type": "text", "text": prompt}]}
-            ]
-        )
-        return response.content[0].text.strip()
+        elif model == "grok":    
+            response = client_key.chat.completions.create(
+                model="grok-4-latest",
+                temperature=temperature,
+                messages=[
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            return response.choices[0].message.content.strip()
+
+        elif model == "claude":
+            if temperature > 1.0:
+                temperature = 1.0
+            response = client_key.messages.create(
+                model="claude-sonnet-4-5-20250929",
+                temperature=temperature,
+                max_tokens=20000,
+                messages=[
+                    {"role": "user", "content": [{"type": "text", "text": prompt}]}
+                ]
+            )
+            return response.content[0].text.strip()
+    
+    if model_option == "alle":
+        responses = {}
+        for m, ck in client_key.items():
+            try:
+                resp = ResponseForEachModel(m, ck, prompt, temperature)
+                responses[m] = resp
+            except Exception as e:
+                responses[m] = f"Error: {str(e)}"
+        return responses    
+    
+    else:
+        return ResponseForEachModel(model_option, client_key, prompt, temperature)
     

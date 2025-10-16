@@ -70,8 +70,9 @@ def GenerationButton(anfang_text, num_stories, client_key, model, prompt, temper
             for i in range(num_stories):
                 if model == "alle":
                     responses = GenerateResponse(client_key, model, prompt, temperature)
-                    for m, response in responses.items():
-                        st.write(f"Modell: {m}\n")
+                    st.write(f"Responses: \n {responses}")
+                    #for m, response in responses.items():
+                        #st.write(f"Modell: {m}\n")
                         #new_items.append({"text": response, "model": m})
                 else:
                     response = GenerateResponse(client_key, model, prompt, temperature)

@@ -73,8 +73,9 @@ def GenerationButton(anfang_text, num_stories, client_key, model, prompt, temper
                     for m, response in responses.items():
                         st.write(f"Modell: {m}\n")
                         new_items.append({"text": response, "model": m})
-                response = GenerateResponse(client_key, model, prompt, temperature)
-                new_items.append({"text": response, "model": model})
+                else:
+                    response = GenerateResponse(client_key, model, prompt, temperature)
+                    new_items.append({"text": response, "model": model})
                 #return st.session_state["story_pool"].append({
                 #    "text": response,
                 #    "model": model

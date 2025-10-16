@@ -28,6 +28,10 @@ def GenerationButton(anfang_text, num_stories, client_key, model, prompt, temper
         with st.spinner("Geschichten werden generiert..."):
             new_items = []
             for i in range(num_stories):
+                if model == "alle":
+                    responses = GenerateResponse(client_key, model, prompt, temperature)
+                    for m, response in responses.items():
+                        new_items.append({"text": response, "model": m})
                 response = GenerateResponse(client_key, model, prompt, temperature)
                 new_items.append({"text": response, "model": model})
                 #return st.session_state["story_pool"].append({
@@ -48,7 +52,7 @@ def InitializeSession(n):
         model = st.selectbox(
             "Wähle ein Modell:",
             ["gemini-2.5-pro", "gpt-4o-mini", "gpt-4o", "gpt-5", 
-             "deepseek", "grok", "claude"],# "alle"],
+             "deepseek", "grok", "claude", "alle"],
             index=0,  # Standard: Gemini
             label_visibility="collapsed" 
         )

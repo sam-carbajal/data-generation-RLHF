@@ -109,12 +109,3 @@ def GenerateResponse(client_key, model, prompt, temperature):
         )
         return response.content[0].text.strip()
     
-    elif model == "alle":
-        responses = {}
-        for m, ck in client_key.items():
-            try:
-                responses[m] = GenerateResponse(ck, m, prompt, temperature)
-            except Exception as e:
-                responses[m] = f"Error: {str(e)}"
-        return responses
-

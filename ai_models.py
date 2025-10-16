@@ -16,35 +16,38 @@ class StoryGenerator:
         )
         return response.text.strip()
 
-def ClientKey(model):
+def ClientKey(model_option):
 
-    def create_client(name):
-        if name in ["gemini-2.5-flash", "gemini-2.5-pro"]:
+    def client_model(model):
+        if model == "gemini-2.5-flash" or model == "gemini-2.5-pro":
+            #return genai.Client(api_key=st.secrets['OPENAI_API_KEY'])
             genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-            return genai.GenerativeModel(name)
-        elif name in ["gpt-4o-mini", "gpt-4o", "gpt-5"]:
-            return OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-        elif name == "deepseek":
+            return genai.GenerativeModel(model)
+        elif model == "gpt-4o-mini" or model == "gpt-4o" or model == "gpt-5":
             return OpenAI(
-                api_key=st.secrets["DEEPSEEK_API_KEY"],
+                    api_key=st.secrets['OPENAI_API_KEY']
+                )
+        elif model == "deepseek":
+            return OpenAI(
+                api_key=st.secrets['DEEPSEEK_API_KEY'],
                 base_url="https://api.deepseek.com/v1"
             )
-        elif name == "grok":
+        elif model == "grok":
             return OpenAI(
-                api_key=st.secrets["GROK_API_KEY"],
+                api_key=st.secrets['GROK_API_KEY'],
                 base_url="https://api.x.ai/v1"
             )
-        elif name == "claude":
-            return anthropic.Anthropic(api_key=st.secrets["CLAUDE_API_KEY"])
+        elif model == "claude":
+            return anthropic.Anthropic(api_key= st.secrets['CLAUDE_API_KEY'])
+        
         else:
-            raise ValueError(f"Unknown model: {name}")
-
-    if model == "alle":
-        models = ["gemini-2.5-pro", "gpt-4o-mini", "gpt-4o", "gpt-5", "deepseek", "grok", "claude"]
-        return {m: create_client(m) for m in models}
-
-    return create_client(model)
-
+            raise ValueError(f"Unknown model: {model}")
+        
+    if model_option == "alle":
+        all_models = ["gemini-2.5-pro", "gpt-4o-mini", "gpt-4o", "gpt-5", "deepseek", "grok", "claude"]
+        return {m: client_model(m) for m in all_models}
+    else:
+        return client_model(model_option)
     
 
 def GenerateResponse(client_key, model, prompt, temperature):

@@ -17,39 +17,34 @@ class StoryGenerator:
         return response.text.strip()
 
 def ClientKey(model):
-    if model == "gemini-2.5-flash" or model == "gemini-2.5-pro":
-        #return genai.Client(api_key=st.secrets['OPENAI_API_KEY'])
-        genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-        return genai.GenerativeModel(model)
-    elif model == "gpt-4o-mini" or model == "gpt-4o" or model == "gpt-5":
-        return OpenAI(
-                api_key=st.secrets['OPENAI_API_KEY']
+
+    def create_client(name):
+        if name in ["gemini-2.5-flash", "gemini-2.5-pro"]:
+            genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+            return genai.GenerativeModel(name)
+        elif name in ["gpt-4o-mini", "gpt-4o", "gpt-5"]:
+            return OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+        elif name == "deepseek":
+            return OpenAI(
+                api_key=st.secrets["DEEPSEEK_API_KEY"],
+                base_url="https://api.deepseek.com/v1"
             )
-    elif model == "deepseek":
-        return OpenAI(
-            api_key=st.secrets['DEEPSEEK_API_KEY'],
-            base_url="https://api.deepseek.com/v1"
-        )
-    elif model == "grok":
-        return OpenAI(
-            api_key=st.secrets['GROK_API_KEY'],
-            base_url="https://api.x.ai/v1"
-        )
-    elif model == "claude":
-        return anthropic.Anthropic(api_key= st.secrets['CLAUDE_API_KEY'])
-    
-    elif model == "alle":
-        return {
-            "gemini-2.5-pro": ClientKey("gemini-2.5-pro"),
-            "gpt-4o-mini": ClientKey("gpt-4o-mini"),
-            "gpt-4o": ClientKey("gpt-4o"),
-            "gpt-5": ClientKey("gpt-5"),
-            "deepseek": ClientKey("deepseek"),
-            "grok": ClientKey("grok"),
-            "claude": ClientKey("claude")
-        }
-    else:
-        raise ValueError(f"Unknown model: {model}")
+        elif name == "grok":
+            return OpenAI(
+                api_key=st.secrets["GROK_API_KEY"],
+                base_url="https://api.x.ai/v1"
+            )
+        elif name == "claude":
+            return anthropic.Anthropic(api_key=st.secrets["CLAUDE_API_KEY"])
+        else:
+            raise ValueError(f"Unknown model: {name}")
+
+    if model == "alle":
+        models = ["gemini-2.5-pro", "gpt-4o-mini", "gpt-4o", "gpt-5", "deepseek", "grok", "claude"]
+        return {m: create_client(m) for m in models}
+
+    return create_client(model)
+
     
 
 def GenerateResponse(client_key, model, prompt, temperature):

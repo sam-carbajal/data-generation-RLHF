@@ -23,25 +23,6 @@ def DefaultSettings():
     if "rankings" not in st.session_state:
         st.session_state["rankings"] = {}
 
-def GenerationButton(anfang_text, num_stories, client_key, model, prompt, temperature):
-    if st.button(f"{anfang_text}"):
-        with st.spinner("Geschichten werden generiert..."):
-            new_items = []
-            for i in range(num_stories):
-                if model == "alle":
-                    responses = GenerateResponse(client_key, model, prompt, temperature)
-                    for m, response in responses.items():
-                        new_items.append({"text": response, "model": m})
-                response = GenerateResponse(client_key, model, prompt, temperature)
-                new_items.append({"text": response, "model": model})
-                #return st.session_state["story_pool"].append({
-                #    "text": response,
-                #    "model": model
-                #})
-            st.session_state["story_pool"].extend(new_items)
-        st.success(f"{len(new_items)} Geschichten generiert.")
-        st.rerun()
-
 def InitializeSession(n):
     #st.title("KI Generator + Annotationen")
     st.header("**KI Generator + Annotationen**")
@@ -80,6 +61,28 @@ def InitializeSession(n):
         GenerationButton("Generiere eine neue Geschichte", num_new_stories, client_key, model, prompt, temperature)
         AnnotationSelection(n)
     return prompt
+
+
+def GenerationButton(anfang_text, num_stories, client_key, model, prompt, temperature):
+    if st.button(f"{anfang_text}"):
+        with st.spinner("Geschichten werden generiert..."):
+            new_items = []
+            for i in range(num_stories):
+                if model == "alle":
+                    responses = GenerateResponse(client_key, model, prompt, temperature)
+                    for m, response in responses.items():
+                        print(f"Modell: {m}\n")
+                        new_items.append({"text": response, "model": m})
+                response = GenerateResponse(client_key, model, prompt, temperature)
+                new_items.append({"text": response, "model": model})
+                #return st.session_state["story_pool"].append({
+                #    "text": response,
+                #    "model": model
+                #})
+            st.session_state["story_pool"].extend(new_items)
+        st.success(f"{len(new_items)} Geschichten generiert.")
+        st.rerun()
+
 
 def AnnotationSelection(n):
     if st.session_state["story_pool"]:

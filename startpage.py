@@ -33,7 +33,7 @@ def InitializeSession(n):
         model = st.selectbox(
             "Wähle ein Modell:",
             ["gemini-2.5-pro", "gpt-4o-mini", "gpt-4o", "gpt-5", 
-             "deepseek", "grok", "claude"],#, "alle"],
+             "deepseek", "grok", "claude", "alle"],
             index=0,  # Standard: Gemini
             label_visibility="collapsed" 
         )

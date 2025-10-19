@@ -129,9 +129,9 @@ def ExistingStoryButton(num_story_pool):
         alt_story = ""
         alt_story = st.text_input("Bestehende Geschichte eingeben")
         st.button("Hinzufügen")
-        if alt_story:
-            new_items.append({"text": alt_story, "model": f"Story-Datenbank {len(num_story_pool)+1}"})
-            st.session_state["story_pool"].extend(new_items)
-            st.success()
+        if alt_story.strip():
+            new_item = {"text": alt_story, "model": f"Story-Datenbank {len(st.session_state['story_pool']) + 1}"}
+            st.session_state["story_pool"].append(new_item)
+            st.success("Bestehende Geschichte wurde hinzugefügt.")
             st.rerun()
-            return num_story_pool
+    return num_story_pool

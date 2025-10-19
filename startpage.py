@@ -56,7 +56,7 @@ def InitializeSession(n):
     prompt = ""
     prompt = st.text_input("Prompt eingeben")
     if len(st.session_state["story_pool"]) == 0:
-        num_stories = st.slider("**Anzahl der zu generierenden Geschichten**", 1, 10, 2)
+        num_stories = st.slider("**Anzahl der zu generierenden Geschichten**", 1, 10, 1)
         GenerationButton("Generiere Geschichten", num_stories, client_key, model, prompt, temperature)
     else:
         num_new_stories = st.slider("**Anzahl der zu generierenden neuen Stories**", 1, 5, 1)

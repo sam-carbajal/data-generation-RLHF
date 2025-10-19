@@ -1,6 +1,8 @@
 import streamlit as st
 from ai_models import GenerateResponse, ClientKey
 
+new_items = []
+
 def DefaultSettings():
     left, middle, m2, right = st.columns(4)
     if right.button("Session neustarten"):
@@ -58,7 +60,14 @@ def InitializeSession(n):
         GenerationButton("Generiere Geschichten", num_stories, client_key, model, prompt, temperature)
     else:
         num_new_stories = st.slider("**Anzahl der zu generierenden neuen Stories**", 1, 5, 1)
-        GenerationButton("Generiere eine neue Geschichte", num_new_stories, client_key, model, prompt, temperature)
+        col5, col6 = st.columns([1, 4])
+
+        with col5:
+            GenerationButton("Generiere eine neue Geschichte", num_new_stories, client_key, model, prompt, temperature)
+        with col6:
+            num_story_pool=[]
+            num_story_pool = ExistingStoryButton(num_story_pool)
+
         AnnotationSelection(n)
     return prompt
 
@@ -66,7 +75,7 @@ def InitializeSession(n):
 def GenerationButton(anfang_text, num_stories, client_key, model, prompt, temperature):
     if st.button(f"{anfang_text}"):
         with st.spinner("Geschichten werden generiert..."):
-            new_items = []
+            #new_items = []
             for i in range(num_stories):
                 if model == "alle":
                     responses = GenerateResponse(client_key, model, prompt, temperature)
@@ -113,3 +122,13 @@ def AnnotationSelection(n):
                         st.warning(f"Bitte wähle genau {n} Geschichten für die Annotation aus!")
                     else:
                         st.session_state["page"] = "annotation"
+
+
+def ExistingStoryButton(num_story_pool):
+    if st.button("Geschichte angeben"):
+        alt_story = ""
+        alt_story = st.text_input("Bestehende Geschichte eingeben")
+        st.button("Hinzufügen")
+        if alt_story:
+            new_items.append({"text": alt_story, "model": f"Story-Datenbank {len(num_story_pool)+1}"})
+            st.session_state["story_pool"].extend(new_items)

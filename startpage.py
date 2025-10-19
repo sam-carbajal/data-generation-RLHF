@@ -69,6 +69,7 @@ def InitializeSession(n):
             num_story_pool = ExistingStoryButton(num_story_pool)
 
         AnnotationSelection(n)
+        
     return prompt
 
 
@@ -130,8 +131,12 @@ def ExistingStoryButton(num_story_pool):
         alt_story = st.text_input("Bestehende Geschichte eingeben")
         st.button("Hinzufügen")
         if alt_story.strip():
-            new_item = {"text": alt_story, "model": f"Story-Datenbank {len(st.session_state['story_pool']) + 1}"}
+            new_item = {
+                "text": alt_story.strip(),
+                "model": f"Story-Datenbank {len(st.session_state['story_pool']) + 1}"
+            }
             st.session_state["story_pool"].append(new_item)
+            st.session_state["alt_story_input"] = ""  # clear the text field
             st.success("Bestehende Geschichte wurde hinzugefügt.")
             st.rerun()
     return num_story_pool

@@ -60,13 +60,15 @@ def InitializeSession(n):
         GenerationButton("Generiere Geschichten", num_stories, client_key, model, prompt, temperature)
     else:
         num_new_stories = st.slider("**Anzahl der zu generierenden neuen Stories**", 1, 5, 1)
-        col5, col6 = st.columns([1, 1])
+        #col5, col6 = st.columns([1, 1])
 
-        with col5:
-            GenerationButton("Generiere eine neue Geschichte", num_new_stories, client_key, model, prompt, temperature)
-        with col6:
-            num_story_pool=[]
-            num_story_pool = ExistingStoryButton(num_story_pool)
+        GenerationButton("Generiere eine neue Geschichte", num_new_stories, client_key, model, prompt, temperature)
+
+        #with col5:
+        #    GenerationButton("Generiere eine neue Geschichte", num_new_stories, client_key, model, prompt, temperature)
+        #with col6:
+        #    num_story_pool=[]
+        #    num_story_pool = ExistingStoryButton(num_story_pool)
 
         AnnotationSelection(n)
         
@@ -131,12 +133,9 @@ def ExistingStoryButton(num_story_pool):
         alt_story = st.text_input("Bestehende Geschichte eingeben")
         st.button("Hinzufügen")
         if alt_story.strip():
-            new_item = {
-                "text": alt_story.strip(),
-                "model": f"Story-Datenbank {len(st.session_state['story_pool']) + 1}"
-            }
+            new_item = {"text": alt_story, "model": f"Story-Datenbank {len(st.session_state['story_pool']) + 1}"}
             st.session_state["story_pool"].append(new_item)
-            st.session_state["alt_story_input"] = ""  # clear the text field
             st.success("Bestehende Geschichte wurde hinzugefügt.")
             st.rerun()
+            
     return num_story_pool

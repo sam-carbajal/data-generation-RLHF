@@ -125,7 +125,7 @@ def AnnotationSelection(n):
 
 
 def ExistingStoryButton(num_story_pool):
-    if st.button("Geschichte angeben"):
+    if st.button("Bestehende Geschichte angeben"):
         alt_story = ""
         alt_story = st.text_input("Bestehende Geschichte eingeben")
         st.button("Hinzufügen")

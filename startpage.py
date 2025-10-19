@@ -60,7 +60,7 @@ def InitializeSession(n):
         GenerationButton("Generiere Geschichten", num_stories, client_key, model, prompt, temperature)
     else:
         num_new_stories = st.slider("**Anzahl der zu generierenden neuen Stories**", 1, 5, 1)
-        col5, col6 = st.columns([1, 4])
+        col5, col6 = st.columns([1, 2])
 
         with col5:
             GenerationButton("Generiere eine neue Geschichte", num_new_stories, client_key, model, prompt, temperature)

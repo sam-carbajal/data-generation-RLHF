@@ -132,3 +132,6 @@ def ExistingStoryButton(num_story_pool):
         if alt_story:
             new_items.append({"text": alt_story, "model": f"Story-Datenbank {len(num_story_pool)+1}"})
             st.session_state["story_pool"].extend(new_items)
+            st.success()
+            st.rerun()
+            return num_story_pool
